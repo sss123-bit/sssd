@@ -1,0 +1,2281 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Basic Imports
+# For numeric/scientific calculations
+import numpy as np
+# For Data Reading and preprocessing
+import pandas as pd
+# For Data Visualisation
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# To ignore warnings
+import warnings
+warnings.filterwarnings('ignore')
+# For Machine learning packacges we use scikit-lean. It will be shown when needed
+wine=pd.read_csv("wine_dataset.csv") 
+
+
+from sklearn import preprocessing
+label_encoder=preprocessing.LabelEncoder()
+wine['Wine Type']=label_encoder.fit_transform(wine['Wine Type']) 
+
+
+for col in wine.columns:
+    if(col=='Wine Type'):
+        continue
+    else:
+        wine[col].plot(kind='box',figsize=(10,7))
+        plt.show() 
+		
+from scipy.stats import shapiro 
+shapiro(wine['Alcohol'])
+wine.corr(method='spearman')
+import seaborn as sns 
+sns.heatmap(wine) 
+plt.scatter(x='Alcohol', y='Color intensity', data=wine) 
+wine.skew() 
+from scipy.stats import kurtosis 
+wine.kurtosis(axis=0) 
+fig=plt.figure()
+fig.set_figwidth(3)
+fig.set_figheight(7)
+plt.bar(wine["Wine Type"],wine["Alcohol"],width=0.2)
+plt.suptitle("Wine Type Vs Alcohol",fontsize=30)
+plt.xlabel("Wine Type",fontsize=22)
+plt.ylabel("Alcohol",fontsize=22) 
+fig=plt.figure()
+fig.set_figwidth(3)
+fig.set_figheight(7)
+plt.bar(wine["Wine Type"],wine["Malic acid"],width=0.2)
+plt.suptitle("Wine Type Vs Malic acid",fontsize=30)
+plt.xlabel("Wine Type",fontsize=22)
+plt.ylabel("Malic acid",fontsize=22) 
+
+
+
+wine1=wine.loc[wine['Wine Type']==0]
+sample1=wine1.sample(frac=0.5)
+sample1 
+
+
+
+wine2=wine.loc[wine['Wine Type']==1]
+sample2=wine2.sample(frac=0.5)
+sample2 
+
+wine.loc[wine['Wine Type']==1].describe() 
+
+
+
+
+l1=['Alcohol', 'Malic acid', 'Ash', 'Alcalinity of ash', 'Magnesium',
+       'Total phenols', 'Flavanoids', 'Nonflavanoid phenols',
+       'Proanthocyanins', 'Color intensity', 'Hue',
+       'OD280/OD315 of diluted wines', 'Proline'] 
+for i in l1: 
+    plt.scatter(x='Wine Type',y=i, data=wine) 
+    
+    plt.xlabel("Wine Type") 
+    plt.ylabel(i)
+    plt.show() 
+	
+	
+	
+plt.scatter(x='Flavanoids',y='Total phenols', data=wine.loc[wine['Wine Type']==1]) 
+
+
+from sklearn.linear_model import LogisticRegression
+model =LogisticRegression()
+x=wine[['Flavanoids','Alcohol','Proline','Color intensity']]
+y=wine["Wine Type"]
+model.fit(x,y)
+print("scr",model.score(x,y))
+v=wine["Wine Type"]
+p=model.predict(x)
+print("Predict",p)
+print("org values",np.array(v)) 
+
+
+import seaborn as sns; sns.set() 
+from scipy.stats import shapiro
+for i in wine.columns:
+    fig,ax=plt.subplots()
+    sns.distplot(wine[i],ax=ax,color='g') 
+    plt.show() 
+    print("Shapiro val for ",i,shapiro(wine[i]))
+	
+	
+Narr=np.random.randint(0,1000,size=len(arr1))
+
+arr1=np.array(arr1,dtype=complex) 
+
+arr = np.arange(4)
+print(arr)
+s=arr.reshape(2,2) 
+print(s) 
+
+
+import numpy as np
+
+n1=np.eye(4,dtype=int)
+
+n1=np.reshape(n1,(16,))
+
+n1=np.insert(n1,0,0)
+n1=np.delete(n1,16)
+n1=n1.reshape(4,4) 
+n1*np.array([0,4,5,6]) 
+
+
+# Basic Imports
+# For numeric/scientific calculations
+import numpy as np
+# For Data Reading and preprocessing
+import pandas as pd
+# For Data Visualisation
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# To ignore warnings
+import warnings
+warnings.filterwarnings('ignore')
+# For Machine learning packacges we use scikit-lean. It will be shown when needed 
+
+
+
+# Encoding unknown values present in adult dataset: '?' to 'NaN'
+adult_df[adult_df == '?'] = np.nan 
+
+
+
+# seeing the values we can be sure that work class is a categorical variable
+# thus to fill in null values, it is more feasible to use the central tendency: 'mode'
+adult_df['workclass'].fillna(adult_df['workclass'].mode()[0], inplace=True) 
+
+
+# it can be inferred that income can be selected as a target variable or dependent variable (y)
+# the othe columns are treated as independent variables (X)
+# Splitting the dataset into independent and dependent variables is done as shown below
+X = adult_df.drop(['income'], axis=1)
+y = adult_df['income'] 
+
+
+
+# we observe that the summation of errors is close to zero, 
+# thus it is more feasible to have an error in the form of higher power. 
+# Hence we use Mean squared error, RMSE, etc.
+
+comp_error_df = pd.DataFrame(np.array([comp_df.Units,
+              comp_df.Minutes,
+              comp_df.MeanTime,
+              comp_df.MeanTime - comp_df.Minutes,
+              (comp_df.MeanTime - comp_df.Minutes)**2]).T,
+              columns=["Units", "Actual time", "Predicted time", "Error", "Sq.Error"])
+comp_error_df 
+
+y_pred = comp_model.intercept_+comp_model.coef_[0,0]*(comp_df['Units'])
+y_pred 
+
+
+model.summary() 
+# our aim is to bring this sum of squared errors to as low value as possible.
+# This is obtained by applying a regression model
+from sklearn.linear_model import LinearRegression
+comp_model = LinearRegression()
+comp_model.fit(X = comp_df.loc[:,["Units"]], y= comp_df.loc[:,["Minutes"]])
+
+
+ss.loc[ss['Type 1']=='Fire'] 
+
+
+ss.sort_values('Type 1') 
+
+
+ss.sort_values(['Type 1','HP'],ascending=[True,False]) 
+
+
+
+obj=df.corr() 
+plt.figure(figsize=(10,10))
+sns.heatmap(obj,cbar=true,square=true,annot  
+
+
+
+
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns 
+
+
+
+
+df=pd.read_csv('computers.csv')
+df.head() 
+
+
+
+df.describe() 
+
+
+
+
+miniutes_model0=df['Minutes'].mean()
+miniutes_model1=10+12*df['Units']
+miniutes_model2=4+16*df['Units']
+miniutes_model3= 4.161654 + (15.50877 * df['Units'])
+df['min_model0']=miniutes_model0
+df['min_model1']=miniutes_model1
+df['min_model2']=miniutes_model2
+df['min_model3']=miniutes_model3 
+
+
+
+fig,ax=plt.subplots()
+ax.scatter(df['Units'],df['Minutes'])
+#ax.add_line(plt.Line2D(df['Units'],df['min_model0'],color='red'))
+#ax.add_line(plt.Line2D(df['Units'],df['min_model1'],color='black'))
+#ax.add_line(plt.Line2D(df['Units'],df['min_model2'],color='green'))
+ax.add_line(plt.Line2D(df.Units,df['min_model3'],color='black'))
+#ax.scatterdf['Units'](df['min_model3'],color='blue'))
+ax.set_xlabel("Units")
+ax.set_xlabel("Minutes")
+ax.set_title("speculated model") 
+
+
+model0_obs=pd.DataFrame(np.array([df['Units'], df['Minutes'],df['min_model0'],(df['min_model0']-df['Minutes'])]).T,columns=["Units","actual time","predicted time","error"])
+model0_obs 
+
+
+sum(model0_obs['error']**2) 
+
+from sklearn.linear_model import LinearRegression 
+
+model=LinearRegression()
+model.fit(X=df.loc[:,["Units"]],y=df.loc[:,["Minutes"]])
+print(model.intercept_)
+print(model.coef_) 
+
+
+model.score(np.array(df['Units']).reshape(-1,1),df['Minutes']) 
+
+
+
+
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+%matplotlib inline
+from scipy import stats
+# from scipy.stats import chi2
+from statsmodels.graphics.gofplots import qqplot
+
+# import seaborn as sns 
+
+
+
+
+for column in wine_data:
+    if wine_data[column].dtype in ['float64', 'int64']:
+        plt.figure()
+        wine_data[column].plot(kind='box') 
+		
+outlier_list = ['Malic acid', 'Ash', 'Alcalinity of ash', 'Magnesium', 'Proanthocyanins', 'Color intensity', 'Hue', 'Proline']
+for outlier in outlier_list:
+    q1 = wine_data[outlier].quantile(0.25)
+    q3 = wine_data[outlier].quantile(0.75)
+    iqr = q3-q1
+    a = q1-1.5*iqr
+    b = q3+1.5*iqr
+    wine_data = wine_data[wine_data[outlier]>a]
+    wine_data = wine_data[wine_data[outlier]<b] 
+	
+	
+	
+	
+wine_data[wine_data['Wine Type'] == 'Two'].describe().T
+
+for column in list(wine_data.columns)[:-1]:
+    if wine_data[column].dtype in ['float64', 'int64']:
+        plt.figure()
+        qqplot(wine_data[column], dist=stats.norm, line='45', fit=True)
+        plt.xlabel(column)
+        plt.show() 
+
+		
+cat1 = wine_data[wine_data['Wine Type'] == 'One'].copy()
+cat2 = wine_data[wine_data['Wine Type'] == 'Two'].copy()
+cat3 = wine_data[wine_data['Wine Type'] == 'Three'].copy()
+
+def get_samples(arr):
+#     return np.random.choice(arr, size = round(len(arr)*0.20), replace=False, p=None)
+    return arr.sample(frac=0.4, replace=False)
+
+sample1 = pd.DataFrame(get_samples(cat1))
+# print(sample1)
+sample2 = pd.DataFrame(get_samples(cat2))
+# print(sample2)
+sample3 = pd.DataFrame(get_samples(cat3))
+# print(sample3)
+merged_sample = [sample1, sample2, sample3]
+
+merged_sample_df = pd.concat(merged_sample)
+merged_sample_df 
+
+
+
+for column in list(wine_data.columns)[:-2]:
+    plt.figure()
+    plt.scatter(wine_data['Wine Type'], wine_data[column], edgecolors='black')
+    plt.xlabel('Wine Type')
+    plt.ylabel(column) 
+
+	
+	
+	
+	
+
+wine_data['encode_wt'][wine_data['Wine Type'] == 'One'] = 2
+wine_data['encode_wt'][wine_data['Wine Type'] == 'Two'] = 1
+wine_data['encode_wt'][wine_data['Wine Type'] == 'Three'] = 0
+
+wine_data['encode_wt'].dtype 
+
+
+from sklearn.linear_model import LinearRegression
+model = LinearRegression()
+X = wine_data[['OD280/OD315 of diluted wines',"Flavanoids", 'Proline', 'Total phenols']] #independent variables
+y = wine_data["encode_wt"] #depedent variables
+model.fit(X,y)
+print("Intercept:", model.intercept_,"\nCoefficients:",model.coef_) 
+
+model.score(X, y) 
+
+
+
+
+
+
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import re
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn import metrics
+import warnings
+warnings.filterwarnings(action='ignore')
+import matplotlib.cm as cm
+%matplotlib inline
+ 
+ 
+ #kurtosis
+from scipy.stats import kurtosis
+for i in df.columns:
+    if i == 'gender' or i == 'class':
+        continue
+    else:
+        x=df[i].values
+        print(i+':'+str(kurtosis(x,fisher=False,bias=True)))
+        print() 
+
+		
+from scipy import stats
+for i in df.columns:
+    if i == 'gender' or i == 'class':
+        continue
+    else:
+        print(i)
+        stats.probplot(df[i],dist='norm',plot=plt)
+        plt.show() 
+
+		
+for i in df.columns:
+    if i =='gender' or i == 'class':
+        continue
+    else:
+        df[i].plot.box(figsize=(16,10))
+        plt.show() 
+col_name=['age','workclass','fnlwgt','education',
+          'education-num','marital-status','occupation',
+          'relationship','race','sex','capital-gain',
+          'capital-loss','hours-per-week','native-country','salary']
+df=pd.read_csv('adult.csv',names=col_name)
+df.head() 
+
+
+
+
+df.replace(to_replace=' ?',value=np.nan,inplace=True) 
+
+
+
+df['native-country'].fillna(df['native-country'].mode().values[0],inplace=True) 
+
+
+
+df.groupby(['education']).agg({'occupation' : lambda x:x.mode()}).reset_index() 
+
+
+
+
+sns.catplot('salary','hours-per-week',data=df) 
+
+
+df['native-country'] = df['native-country'].astype('category').cat.codes
+df['salary'] = df['salary'].astype('category').cat.codes
+df['occupation'] = df['occupation'].astype('category').cat.codes
+df['education'] = df['education'].astype('category').cat.codes
+df['workclass'] = df['workclass'].astype('category').cat.codes
+df['relationship'] = df['relationship'].astype('category').cat.codes
+df['marital-status'] = df['marital-status'].astype('category').cat.codes
+df[df.iloc[:,13]==39] 
+
+
+def outlier_detector(datacolumn,percentile):
+    sorted(datacolumn)
+    Q1,Q3=np.perecentile(datacolumn,[100-percentile,percentile])
+    IQR=Q3-Q1
+    lower_range=Q1-(1.5*IQR)
+    upper_range=Q3-(1.5*IQR)
+    return lower_range,upper_range 
+	
+	
+from sklearn import preprocessing
+le=preprocessing.LabelEncoder() 
+
+
+df["gender"]=le.fit_transform(df["gender"]) 
+
+
+for i in sample1.columns:
+    if i == 'gender' or i=='class':
+        continue
+    else:
+        sns.distplot(sample1[i],kde=True)
+        plt.show() 
+
+		
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import re
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn import metrics
+import warnings
+warnings.filterwarnings(action='ignore')
+import matplotlib.cm as cm
+%matplotlib inline
+
+
+for i in cols:
+    if df[i].dtype != np.int64:
+        str_df[i] = df[i]
+
+
+for i in int_df.columns:
+    int_df[i].replace(' ?',int_df[i].median(),inplace=True)
+	
+for i in str_df.columns:
+    print(str_df.mode()[i][0])
+    str_df[i].replace(to_replace='?',value = str_df.mode()[i][0],inplace=True)
+
+
+z_score = np.abs(stats.zscore(int_df))
+z_score
+
+
+int_df = int_df[(z_score<2).all(axis=1)]
+
+
+merged_df = int_df.merge(str_df,how='left', on = 'index')
+
+
+LINEAR REGRESSION
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 10)
+
+
+from sklearn import preprocessing
+
+categorical = ['workclass', 'education', 'marital.status', 'occupation', 'relationship', 
+               'race', 'sex', 'native.country']
+for feature in categorical:
+        le = preprocessing.LabelEncoder()
+        X_train[feature] = le.fit_transform(X_train[feature])
+        X_test[feature] = le.fit_transform(X_test[feature])
+		
+		
+#Remove outlier		
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+
+X_train = pd.DataFrame(scaler.fit_transform(X_train), columns = X.columns)
+X_test = pd.DataFrame(scaler.transform(X_test), columns = X.columns)
+
+
+
+
+
+# Validating our model
+
+import statsmodels.api as sm
+X = sm.add_constant(comp_df[["Units"]])
+y = comp_df["Minutes"]
+model = sm.OLS(y,X).fit()
+
+
+
+
+comp_model.score(X = np.array(comp_df['Units']).reshape(-1,1), y = comp_df['Minutes']) 
+
+
+
+
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import re
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn import metrics
+import warnings
+warnings.filterwarnings(action='ignore')
+import matplotlib.cm as cm
+%matplotlib inline
+
+
+for i in cols:
+    if df[i].dtype != np.int64:
+        str_df[i] = df[i]
+
+
+for i in int_df.columns:
+    int_df[i].replace(' ?',int_df[i].median(),inplace=True)
+	
+for i in str_df.columns:
+    print(str_df.mode()[i][0])
+    str_df[i].replace(to_replace='?',value = str_df.mode()[i][0],inplace=True)
+
+
+z_score = np.abs(stats.zscore(int_df))
+z_score
+
+
+int_df = int_df[(z_score<2).all(axis=1)]
+
+
+merged_df = int_df.merge(str_df,how='left', on = 'index')
+
+
+LINEAR REGRESSION
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 10)
+
+
+from sklearn import preprocessing
+
+categorical = ['workclass', 'education', 'marital.status', 'occupation', 'relationship', 
+               'race', 'sex', 'native.country']
+for feature in categorical:
+        le = preprocessing.LabelEncoder()
+        X_train[feature] = le.fit_transform(X_train[feature])
+        X_test[feature] = le.fit_transform(X_test[feature])
+		
+		
+		
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+
+X_train = pd.DataFrame(scaler.fit_transform(X_train), columns = X.columns)
+X_test = pd.DataFrame(scaler.transform(X_test), columns = X.columns)
+
+
+
+
+
+# Validating our model
+
+import statsmodels.api as sm
+X = sm.add_constant(comp_df[["Units"]])
+y = comp_df["Minutes"]
+model = sm.OLS(y,X).fit()
+
+
+
+
+comp_model.score(X = np.array(comp_df['Units']).reshape(-1,1), y = comp_df['Minutes'])
+
+
+
+
+#importing all the libraries
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import random
+import matplotlib.cm as cm
+import scipy.stats as stats
+from sklearn.preprocessing import MinMaxScaler
+from scipy.special import comb
+%matplotlib inline 
+
+
+iris_setosa = iris.groupby('iris')
+
+# creating separate dataframes for each species of iris
+setosa, versicolor, virginica = [x for _,x in iris.groupby(iris['iris'])] 
+
+
+
+sns.pairplot(df) 
+sns.pairplot(iris, hue='iris') 
+
+
+sample1 = iris.sample()
+sample2 = iris.sample()
+sample3 = iris.sample() 
+
+
+r=-0.159
+t=r*np.sqrt(148)/np.sqrt(1-r**2) 
+
+
+ax = sns.heatmap(iris.corr(), annot=True) 
+
+stats.probplot(iris['sepal length'],dist='norm',plot=plt)
+plt.show() 
+
+#replace outlier
+df["Age"] = np.where(df["Age"] >75, median,df['Age']) 
+
+
+
+
+
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from scipy.stats import shapiro 
+
+
+sns.heatmap(df.corr(),annot=True) 
+
+
+df['bare_nuclei']=df['bare_nuclei'].fillna(df['bare_nuclei'].median()) 
+
+df.boxplot(rot=90,figsize=(15,5)) 
+
+
+for colm in df:
+    if df[colm].dtype in ['int64','float64']:
+        plt.figure()
+        df.boxplot(column=[colm]) 
+		
+		
+df.groupby('class')['class'].count() 
+
+
+df_cancer['uniformity_of_cell_size'].value_counts().plot(kind='bar') 
+
+df.drop_duplicates(subset='col',keep=False,inplace=true)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Basic Imports
+# For numeric/scientific calculations
+import numpy as np
+# For Data Reading and preprocessing
+import pandas as pd
+# For Data Visualisation
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# To ignore warnings
+import warnings
+warnings.filterwarnings('ignore')
+# For Machine learning packacges we use scikit-lean. It will be shown when needed
+wine=pd.read_csv("wine_dataset.csv") 
+
+
+from sklearn import preprocessing
+label_encoder=preprocessing.LabelEncoder()
+wine['Wine Type']=label_encoder.fit_transform(wine['Wine Type']) 
+
+
+for col in wine.columns:
+    if(col=='Wine Type'):
+        continue
+    else:
+        wine[col].plot(kind='box',figsize=(10,7))
+        plt.show() 
+		
+from scipy.stats import shapiro 
+shapiro(wine['Alcohol'])
+wine.corr(method='spearman')
+import seaborn as sns 
+sns.heatmap(wine) 
+plt.scatter(x='Alcohol', y='Color intensity', data=wine) 
+wine.skew() 
+from scipy.stats import kurtosis 
+wine.kurtosis(axis=0) 
+fig=plt.figure()
+fig.set_figwidth(3)
+fig.set_figheight(7)
+plt.bar(wine["Wine Type"],wine["Alcohol"],width=0.2)
+plt.suptitle("Wine Type Vs Alcohol",fontsize=30)
+plt.xlabel("Wine Type",fontsize=22)
+plt.ylabel("Alcohol",fontsize=22) 
+fig=plt.figure()
+fig.set_figwidth(3)
+fig.set_figheight(7)
+plt.bar(wine["Wine Type"],wine["Malic acid"],width=0.2)
+plt.suptitle("Wine Type Vs Malic acid",fontsize=30)
+plt.xlabel("Wine Type",fontsize=22)
+plt.ylabel("Malic acid",fontsize=22) 
+
+
+
+wine1=wine.loc[wine['Wine Type']==0]
+sample1=wine1.sample(frac=0.5)
+sample1 
+
+
+
+wine2=wine.loc[wine['Wine Type']==1]
+sample2=wine2.sample(frac=0.5)
+sample2 
+
+wine.loc[wine['Wine Type']==1].describe() 
+
+
+
+
+l1=['Alcohol', 'Malic acid', 'Ash', 'Alcalinity of ash', 'Magnesium',
+       'Total phenols', 'Flavanoids', 'Nonflavanoid phenols',
+       'Proanthocyanins', 'Color intensity', 'Hue',
+       'OD280/OD315 of diluted wines', 'Proline'] 
+for i in l1: 
+    plt.scatter(x='Wine Type',y=i, data=wine) 
+    
+    plt.xlabel("Wine Type") 
+    plt.ylabel(i)
+    plt.show() 
+	
+	
+	
+plt.scatter(x='Flavanoids',y='Total phenols', data=wine.loc[wine['Wine Type']==1]) 
+
+
+from sklearn.linear_model import LogisticRegression
+model =LogisticRegression()
+x=wine[['Flavanoids','Alcohol','Proline','Color intensity']]
+y=wine["Wine Type"]
+model.fit(x,y)
+print("scr",model.score(x,y))
+v=wine["Wine Type"]
+p=model.predict(x)
+print("Predict",p)
+print("org values",np.array(v)) 
+
+
+import seaborn as sns; sns.set() 
+from scipy.stats import shapiro
+for i in wine.columns:
+    fig,ax=plt.subplots()
+    sns.distplot(wine[i],ax=ax,color='g') 
+    plt.show() 
+    print("Shapiro val for ",i,shapiro(wine[i]))
+	
+	
+Narr=np.random.randint(0,1000,size=len(arr1))
+
+arr1=np.array(arr1,dtype=complex) 
+
+arr = np.arange(4)
+print(arr)
+s=arr.reshape(2,2) 
+print(s) 
+
+
+import numpy as np
+
+n1=np.eye(4,dtype=int)
+
+n1=np.reshape(n1,(16,))
+
+n1=np.insert(n1,0,0)
+n1=np.delete(n1,16)
+n1=n1.reshape(4,4) 
+n1*np.array([0,4,5,6]) 
+
+
+# Basic Imports
+# For numeric/scientific calculations
+import numpy as np
+# For Data Reading and preprocessing
+import pandas as pd
+# For Data Visualisation
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# To ignore warnings
+import warnings
+warnings.filterwarnings('ignore')
+# For Machine learning packacges we use scikit-lean. It will be shown when needed 
+
+
+
+# Encoding unknown values present in adult dataset: '?' to 'NaN'
+adult_df[adult_df == '?'] = np.nan 
+
+
+
+# seeing the values we can be sure that work class is a categorical variable
+# thus to fill in null values, it is more feasible to use the central tendency: 'mode'
+adult_df['workclass'].fillna(adult_df['workclass'].mode()[0], inplace=True) 
+
+
+# it can be inferred that income can be selected as a target variable or dependent variable (y)
+# the othe columns are treated as independent variables (X)
+# Splitting the dataset into independent and dependent variables is done as shown below
+X = adult_df.drop(['income'], axis=1)
+y = adult_df['income'] 
+
+
+
+# we observe that the summation of errors is close to zero, 
+# thus it is more feasible to have an error in the form of higher power. 
+# Hence we use Mean squared error, RMSE, etc.
+
+comp_error_df = pd.DataFrame(np.array([comp_df.Units,
+              comp_df.Minutes,
+              comp_df.MeanTime,
+              comp_df.MeanTime - comp_df.Minutes,
+              (comp_df.MeanTime - comp_df.Minutes)**2]).T,
+              columns=["Units", "Actual time", "Predicted time", "Error", "Sq.Error"])
+comp_error_df 
+
+y_pred = comp_model.intercept_+comp_model.coef_[0,0]*(comp_df['Units'])
+y_pred 
+
+
+model.summary() 
+# our aim is to bring this sum of squared errors to as low value as possible.
+# This is obtained by applying a regression model
+from sklearn.linear_model import LinearRegression
+comp_model = LinearRegression()
+comp_model.fit(X = comp_df.loc[:,["Units"]], y= comp_df.loc[:,["Minutes"]])
+
+
+ss.loc[ss['Type 1']=='Fire'] 
+
+
+ss.sort_values('Type 1') 
+
+
+ss.sort_values(['Type 1','HP'],ascending=[True,False]) 
+
+
+
+obj=df.corr() 
+plt.figure(figsize=(10,10))
+sns.heatmap(obj,cbar=true,square=true,annot  
+
+
+
+
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns 
+
+
+
+
+df=pd.read_csv('computers.csv')
+df.head() 
+
+
+
+df.describe() 
+
+
+
+
+miniutes_model0=df['Minutes'].mean()
+miniutes_model1=10+12*df['Units']
+miniutes_model2=4+16*df['Units']
+miniutes_model3= 4.161654 + (15.50877 * df['Units'])
+df['min_model0']=miniutes_model0
+df['min_model1']=miniutes_model1
+df['min_model2']=miniutes_model2
+df['min_model3']=miniutes_model3 
+
+
+
+fig,ax=plt.subplots()
+ax.scatter(df['Units'],df['Minutes'])
+#ax.add_line(plt.Line2D(df['Units'],df['min_model0'],color='red'))
+#ax.add_line(plt.Line2D(df['Units'],df['min_model1'],color='black'))
+#ax.add_line(plt.Line2D(df['Units'],df['min_model2'],color='green'))
+ax.add_line(plt.Line2D(df.Units,df['min_model3'],color='black'))
+#ax.scatterdf['Units'](df['min_model3'],color='blue'))
+ax.set_xlabel("Units")
+ax.set_xlabel("Minutes")
+ax.set_title("speculated model") 
+
+
+model0_obs=pd.DataFrame(np.array([df['Units'], df['Minutes'],df['min_model0'],(df['min_model0']-df['Minutes'])]).T,columns=["Units","actual time","predicted time","error"])
+model0_obs 
+
+
+sum(model0_obs['error']**2) 
+
+from sklearn.linear_model import LinearRegression 
+
+model=LinearRegression()
+model.fit(X=df.loc[:,["Units"]],y=df.loc[:,["Minutes"]])
+print(model.intercept_)
+print(model.coef_) 
+
+
+model.score(np.array(df['Units']).reshape(-1,1),df['Minutes']) 
+
+
+
+
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+%matplotlib inline
+from scipy import stats
+# from scipy.stats import chi2
+from statsmodels.graphics.gofplots import qqplot
+
+# import seaborn as sns 
+
+
+
+
+for column in wine_data:
+    if wine_data[column].dtype in ['float64', 'int64']:
+        plt.figure()
+        wine_data[column].plot(kind='box') 
+		
+outlier_list = ['Malic acid', 'Ash', 'Alcalinity of ash', 'Magnesium', 'Proanthocyanins', 'Color intensity', 'Hue', 'Proline']
+for outlier in outlier_list:
+    q1 = wine_data[outlier].quantile(0.25)
+    q3 = wine_data[outlier].quantile(0.75)
+    iqr = q3-q1
+    a = q1-1.5*iqr
+    b = q3+1.5*iqr
+    wine_data = wine_data[wine_data[outlier]>a]
+    wine_data = wine_data[wine_data[outlier]<b] 
+	
+	
+	
+	
+wine_data[wine_data['Wine Type'] == 'Two'].describe().T
+
+for column in list(wine_data.columns)[:-1]:
+    if wine_data[column].dtype in ['float64', 'int64']:
+        plt.figure()
+        qqplot(wine_data[column], dist=stats.norm, line='45', fit=True)
+        plt.xlabel(column)
+        plt.show() 
+
+		
+cat1 = wine_data[wine_data['Wine Type'] == 'One'].copy()
+cat2 = wine_data[wine_data['Wine Type'] == 'Two'].copy()
+cat3 = wine_data[wine_data['Wine Type'] == 'Three'].copy()
+
+def get_samples(arr):
+#     return np.random.choice(arr, size = round(len(arr)*0.20), replace=False, p=None)
+    return arr.sample(frac=0.4, replace=False)
+
+sample1 = pd.DataFrame(get_samples(cat1))
+# print(sample1)
+sample2 = pd.DataFrame(get_samples(cat2))
+# print(sample2)
+sample3 = pd.DataFrame(get_samples(cat3))
+# print(sample3)
+merged_sample = [sample1, sample2, sample3]
+
+merged_sample_df = pd.concat(merged_sample)
+merged_sample_df 
+
+
+
+for column in list(wine_data.columns)[:-2]:
+    plt.figure()
+    plt.scatter(wine_data['Wine Type'], wine_data[column], edgecolors='black')
+    plt.xlabel('Wine Type')
+    plt.ylabel(column) 
+
+	
+	
+	
+	
+
+wine_data['encode_wt'][wine_data['Wine Type'] == 'One'] = 2
+wine_data['encode_wt'][wine_data['Wine Type'] == 'Two'] = 1
+wine_data['encode_wt'][wine_data['Wine Type'] == 'Three'] = 0
+
+wine_data['encode_wt'].dtype 
+
+
+from sklearn.linear_model import LinearRegression
+model = LinearRegression()
+X = wine_data[['OD280/OD315 of diluted wines',"Flavanoids", 'Proline', 'Total phenols']] #independent variables
+y = wine_data["encode_wt"] #depedent variables
+model.fit(X,y)
+print("Intercept:", model.intercept_,"\nCoefficients:",model.coef_) 
+
+model.score(X, y) 
+
+
+
+
+
+
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import re
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn import metrics
+import warnings
+warnings.filterwarnings(action='ignore')
+import matplotlib.cm as cm
+%matplotlib inline
+ 
+ 
+ #kurtosis
+from scipy.stats import kurtosis
+for i in df.columns:
+    if i == 'gender' or i == 'class':
+        continue
+    else:
+        x=df[i].values
+        print(i+':'+str(kurtosis(x,fisher=False,bias=True)))
+        print() 
+
+		
+from scipy import stats
+for i in df.columns:
+    if i == 'gender' or i == 'class':
+        continue
+    else:
+        print(i)
+        stats.probplot(df[i],dist='norm',plot=plt)
+        plt.show() 
+
+		
+for i in df.columns:
+    if i =='gender' or i == 'class':
+        continue
+    else:
+        df[i].plot.box(figsize=(16,10))
+        plt.show() 
+col_name=['age','workclass','fnlwgt','education',
+          'education-num','marital-status','occupation',
+          'relationship','race','sex','capital-gain',
+          'capital-loss','hours-per-week','native-country','salary']
+df=pd.read_csv('adult.csv',names=col_name)
+df.head() 
+
+
+
+
+df.replace(to_replace=' ?',value=np.nan,inplace=True) 
+
+
+
+df['native-country'].fillna(df['native-country'].mode().values[0],inplace=True) 
+
+
+
+df.groupby(['education']).agg({'occupation' : lambda x:x.mode()}).reset_index() 
+
+
+
+
+sns.catplot('salary','hours-per-week',data=df) 
+
+
+df['native-country'] = df['native-country'].astype('category').cat.codes
+df['salary'] = df['salary'].astype('category').cat.codes
+df['occupation'] = df['occupation'].astype('category').cat.codes
+df['education'] = df['education'].astype('category').cat.codes
+df['workclass'] = df['workclass'].astype('category').cat.codes
+df['relationship'] = df['relationship'].astype('category').cat.codes
+df['marital-status'] = df['marital-status'].astype('category').cat.codes
+df[df.iloc[:,13]==39] 
+
+
+def outlier_detector(datacolumn,percentile):
+    sorted(datacolumn)
+    Q1,Q3=np.perecentile(datacolumn,[100-percentile,percentile])
+    IQR=Q3-Q1
+    lower_range=Q1-(1.5*IQR)
+    upper_range=Q3-(1.5*IQR)
+    return lower_range,upper_range 
+	
+	
+from sklearn import preprocessing
+le=preprocessing.LabelEncoder() 
+
+
+df["gender"]=le.fit_transform(df["gender"]) 
+
+
+for i in sample1.columns:
+    if i == 'gender' or i=='class':
+        continue
+    else:
+        sns.distplot(sample1[i],kde=True)
+        plt.show() 
+
+		
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import re
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn import metrics
+import warnings
+warnings.filterwarnings(action='ignore')
+import matplotlib.cm as cm
+%matplotlib inline
+
+
+for i in cols:
+    if df[i].dtype != np.int64:
+        str_df[i] = df[i]
+
+
+for i in int_df.columns:
+    int_df[i].replace(' ?',int_df[i].median(),inplace=True)
+	
+for i in str_df.columns:
+    print(str_df.mode()[i][0])
+    str_df[i].replace(to_replace='?',value = str_df.mode()[i][0],inplace=True)
+
+
+z_score = np.abs(stats.zscore(int_df))
+z_score
+
+
+int_df = int_df[(z_score<2).all(axis=1)]
+
+
+merged_df = int_df.merge(str_df,how='left', on = 'index')
+
+
+LINEAR REGRESSION
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 10)
+
+
+from sklearn import preprocessing
+
+categorical = ['workclass', 'education', 'marital.status', 'occupation', 'relationship', 
+               'race', 'sex', 'native.country']
+for feature in categorical:
+        le = preprocessing.LabelEncoder()
+        X_train[feature] = le.fit_transform(X_train[feature])
+        X_test[feature] = le.fit_transform(X_test[feature])
+		
+		
+#Remove outlier		
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+
+X_train = pd.DataFrame(scaler.fit_transform(X_train), columns = X.columns)
+X_test = pd.DataFrame(scaler.transform(X_test), columns = X.columns)
+
+
+
+
+
+# Validating our model
+
+import statsmodels.api as sm
+X = sm.add_constant(comp_df[["Units"]])
+y = comp_df["Minutes"]
+model = sm.OLS(y,X).fit()
+
+
+
+
+comp_model.score(X = np.array(comp_df['Units']).reshape(-1,1), y = comp_df['Minutes']) 
+
+
+
+
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import re
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn import metrics
+import warnings
+warnings.filterwarnings(action='ignore')
+import matplotlib.cm as cm
+%matplotlib inline
+
+
+for i in cols:
+    if df[i].dtype != np.int64:
+        str_df[i] = df[i]
+
+
+for i in int_df.columns:
+    int_df[i].replace(' ?',int_df[i].median(),inplace=True)
+	
+for i in str_df.columns:
+    print(str_df.mode()[i][0])
+    str_df[i].replace(to_replace='?',value = str_df.mode()[i][0],inplace=True)
+
+
+z_score = np.abs(stats.zscore(int_df))
+z_score
+
+
+int_df = int_df[(z_score<2).all(axis=1)]
+
+
+merged_df = int_df.merge(str_df,how='left', on = 'index')
+
+
+LINEAR REGRESSION
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 10)
+
+
+from sklearn import preprocessing
+
+categorical = ['workclass', 'education', 'marital.status', 'occupation', 'relationship', 
+               'race', 'sex', 'native.country']
+for feature in categorical:
+        le = preprocessing.LabelEncoder()
+        X_train[feature] = le.fit_transform(X_train[feature])
+        X_test[feature] = le.fit_transform(X_test[feature])
+		
+		
+		
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+
+X_train = pd.DataFrame(scaler.fit_transform(X_train), columns = X.columns)
+X_test = pd.DataFrame(scaler.transform(X_test), columns = X.columns)
+
+
+
+
+
+# Validating our model
+
+import statsmodels.api as sm
+X = sm.add_constant(comp_df[["Units"]])
+y = comp_df["Minutes"]
+model = sm.OLS(y,X).fit()
+
+
+
+
+comp_model.score(X = np.array(comp_df['Units']).reshape(-1,1), y = comp_df['Minutes'])
+
+
+
+
+#importing all the libraries
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import random
+import matplotlib.cm as cm
+import scipy.stats as stats
+from sklearn.preprocessing import MinMaxScaler
+from scipy.special import comb
+%matplotlib inline 
+
+
+iris_setosa = iris.groupby('iris')
+
+# creating separate dataframes for each species of iris
+setosa, versicolor, virginica = [x for _,x in iris.groupby(iris['iris'])] 
+
+
+
+sns.pairplot(df) 
+sns.pairplot(iris, hue='iris') 
+
+
+sample1 = iris.sample()
+sample2 = iris.sample()
+sample3 = iris.sample() 
+
+
+r=-0.159
+t=r*np.sqrt(148)/np.sqrt(1-r**2) 
+
+
+ax = sns.heatmap(iris.corr(), annot=True) 
+
+stats.probplot(iris['sepal length'],dist='norm',plot=plt)
+plt.show() 
+
+#replace outlier
+df["Age"] = np.where(df["Age"] >75, median,df['Age']) 
+
+
+
+
+
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from scipy.stats import shapiro 
+
+
+sns.heatmap(df.corr(),annot=True) 
+
+
+df['bare_nuclei']=df['bare_nuclei'].fillna(df['bare_nuclei'].median()) 
+
+df.boxplot(rot=90,figsize=(15,5)) 
+
+
+for colm in df:
+    if df[colm].dtype in ['int64','float64']:
+        plt.figure()
+        df.boxplot(column=[colm]) 
+		
+		
+df.groupby('class')['class'].count() 
+
+
+df_cancer['uniformity_of_cell_size'].value_counts().plot(kind='bar') 
+
+df.drop_duplicates(subset='col',keep=False,inplace=true)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Basic Imports
+# For numeric/scientific calculations
+import numpy as np
+# For Data Reading and preprocessing
+import pandas as pd
+# For Data Visualisation
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# To ignore warnings
+import warnings
+warnings.filterwarnings('ignore')
+# For Machine learning packacges we use scikit-lean. It will be shown when needed
+wine=pd.read_csv("wine_dataset.csv") 
+
+
+from sklearn import preprocessing
+label_encoder=preprocessing.LabelEncoder()
+wine['Wine Type']=label_encoder.fit_transform(wine['Wine Type']) 
+
+
+for col in wine.columns:
+    if(col=='Wine Type'):
+        continue
+    else:
+        wine[col].plot(kind='box',figsize=(10,7))
+        plt.show() 
+		
+from scipy.stats import shapiro 
+shapiro(wine['Alcohol'])
+wine.corr(method='spearman')
+import seaborn as sns 
+sns.heatmap(wine) 
+plt.scatter(x='Alcohol', y='Color intensity', data=wine) 
+wine.skew() 
+from scipy.stats import kurtosis 
+wine.kurtosis(axis=0) 
+fig=plt.figure()
+fig.set_figwidth(3)
+fig.set_figheight(7)
+plt.bar(wine["Wine Type"],wine["Alcohol"],width=0.2)
+plt.suptitle("Wine Type Vs Alcohol",fontsize=30)
+plt.xlabel("Wine Type",fontsize=22)
+plt.ylabel("Alcohol",fontsize=22) 
+fig=plt.figure()
+fig.set_figwidth(3)
+fig.set_figheight(7)
+plt.bar(wine["Wine Type"],wine["Malic acid"],width=0.2)
+plt.suptitle("Wine Type Vs Malic acid",fontsize=30)
+plt.xlabel("Wine Type",fontsize=22)
+plt.ylabel("Malic acid",fontsize=22) 
+
+
+
+wine1=wine.loc[wine['Wine Type']==0]
+sample1=wine1.sample(frac=0.5)
+sample1 
+
+
+
+wine2=wine.loc[wine['Wine Type']==1]
+sample2=wine2.sample(frac=0.5)
+sample2 
+
+wine.loc[wine['Wine Type']==1].describe() 
+
+
+
+
+l1=['Alcohol', 'Malic acid', 'Ash', 'Alcalinity of ash', 'Magnesium',
+       'Total phenols', 'Flavanoids', 'Nonflavanoid phenols',
+       'Proanthocyanins', 'Color intensity', 'Hue',
+       'OD280/OD315 of diluted wines', 'Proline'] 
+for i in l1: 
+    plt.scatter(x='Wine Type',y=i, data=wine) 
+    
+    plt.xlabel("Wine Type") 
+    plt.ylabel(i)
+    plt.show() 
+	
+	
+	
+plt.scatter(x='Flavanoids',y='Total phenols', data=wine.loc[wine['Wine Type']==1]) 
+
+
+from sklearn.linear_model import LogisticRegression
+model =LogisticRegression()
+x=wine[['Flavanoids','Alcohol','Proline','Color intensity']]
+y=wine["Wine Type"]
+model.fit(x,y)
+print("scr",model.score(x,y))
+v=wine["Wine Type"]
+p=model.predict(x)
+print("Predict",p)
+print("org values",np.array(v)) 
+
+
+import seaborn as sns; sns.set() 
+from scipy.stats import shapiro
+for i in wine.columns:
+    fig,ax=plt.subplots()
+    sns.distplot(wine[i],ax=ax,color='g') 
+    plt.show() 
+    print("Shapiro val for ",i,shapiro(wine[i]))
+	
+	
+Narr=np.random.randint(0,1000,size=len(arr1))
+
+arr1=np.array(arr1,dtype=complex) 
+
+arr = np.arange(4)
+print(arr)
+s=arr.reshape(2,2) 
+print(s) 
+
+
+import numpy as np
+
+n1=np.eye(4,dtype=int)
+
+n1=np.reshape(n1,(16,))
+
+n1=np.insert(n1,0,0)
+n1=np.delete(n1,16)
+n1=n1.reshape(4,4) 
+n1*np.array([0,4,5,6]) 
+
+
+# Basic Imports
+# For numeric/scientific calculations
+import numpy as np
+# For Data Reading and preprocessing
+import pandas as pd
+# For Data Visualisation
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# To ignore warnings
+import warnings
+warnings.filterwarnings('ignore')
+# For Machine learning packacges we use scikit-lean. It will be shown when needed 
+
+
+
+# Encoding unknown values present in adult dataset: '?' to 'NaN'
+adult_df[adult_df == '?'] = np.nan 
+
+
+
+# seeing the values we can be sure that work class is a categorical variable
+# thus to fill in null values, it is more feasible to use the central tendency: 'mode'
+adult_df['workclass'].fillna(adult_df['workclass'].mode()[0], inplace=True) 
+
+
+# it can be inferred that income can be selected as a target variable or dependent variable (y)
+# the othe columns are treated as independent variables (X)
+# Splitting the dataset into independent and dependent variables is done as shown below
+X = adult_df.drop(['income'], axis=1)
+y = adult_df['income'] 
+
+
+
+# we observe that the summation of errors is close to zero, 
+# thus it is more feasible to have an error in the form of higher power. 
+# Hence we use Mean squared error, RMSE, etc.
+
+comp_error_df = pd.DataFrame(np.array([comp_df.Units,
+              comp_df.Minutes,
+              comp_df.MeanTime,
+              comp_df.MeanTime - comp_df.Minutes,
+              (comp_df.MeanTime - comp_df.Minutes)**2]).T,
+              columns=["Units", "Actual time", "Predicted time", "Error", "Sq.Error"])
+comp_error_df 
+
+y_pred = comp_model.intercept_+comp_model.coef_[0,0]*(comp_df['Units'])
+y_pred 
+
+
+model.summary() 
+# our aim is to bring this sum of squared errors to as low value as possible.
+# This is obtained by applying a regression model
+from sklearn.linear_model import LinearRegression
+comp_model = LinearRegression()
+comp_model.fit(X = comp_df.loc[:,["Units"]], y= comp_df.loc[:,["Minutes"]])
+
+
+ss.loc[ss['Type 1']=='Fire'] 
+
+
+ss.sort_values('Type 1') 
+
+
+ss.sort_values(['Type 1','HP'],ascending=[True,False]) 
+
+
+
+obj=df.corr() 
+plt.figure(figsize=(10,10))
+sns.heatmap(obj,cbar=true,square=true,annot  
+
+
+
+
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns 
+
+
+
+
+df=pd.read_csv('computers.csv')
+df.head() 
+
+
+
+df.describe() 
+
+
+
+
+miniutes_model0=df['Minutes'].mean()
+miniutes_model1=10+12*df['Units']
+miniutes_model2=4+16*df['Units']
+miniutes_model3= 4.161654 + (15.50877 * df['Units'])
+df['min_model0']=miniutes_model0
+df['min_model1']=miniutes_model1
+df['min_model2']=miniutes_model2
+df['min_model3']=miniutes_model3 
+
+
+
+fig,ax=plt.subplots()
+ax.scatter(df['Units'],df['Minutes'])
+#ax.add_line(plt.Line2D(df['Units'],df['min_model0'],color='red'))
+#ax.add_line(plt.Line2D(df['Units'],df['min_model1'],color='black'))
+#ax.add_line(plt.Line2D(df['Units'],df['min_model2'],color='green'))
+ax.add_line(plt.Line2D(df.Units,df['min_model3'],color='black'))
+#ax.scatterdf['Units'](df['min_model3'],color='blue'))
+ax.set_xlabel("Units")
+ax.set_xlabel("Minutes")
+ax.set_title("speculated model") 
+
+
+model0_obs=pd.DataFrame(np.array([df['Units'], df['Minutes'],df['min_model0'],(df['min_model0']-df['Minutes'])]).T,columns=["Units","actual time","predicted time","error"])
+model0_obs 
+
+
+sum(model0_obs['error']**2) 
+
+from sklearn.linear_model import LinearRegression 
+
+model=LinearRegression()
+model.fit(X=df.loc[:,["Units"]],y=df.loc[:,["Minutes"]])
+print(model.intercept_)
+print(model.coef_) 
+
+
+model.score(np.array(df['Units']).reshape(-1,1),df['Minutes']) 
+
+
+
+
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+%matplotlib inline
+from scipy import stats
+# from scipy.stats import chi2
+from statsmodels.graphics.gofplots import qqplot
+
+# import seaborn as sns 
+
+
+
+
+for column in wine_data:
+    if wine_data[column].dtype in ['float64', 'int64']:
+        plt.figure()
+        wine_data[column].plot(kind='box') 
+		
+outlier_list = ['Malic acid', 'Ash', 'Alcalinity of ash', 'Magnesium', 'Proanthocyanins', 'Color intensity', 'Hue', 'Proline']
+for outlier in outlier_list:
+    q1 = wine_data[outlier].quantile(0.25)
+    q3 = wine_data[outlier].quantile(0.75)
+    iqr = q3-q1
+    a = q1-1.5*iqr
+    b = q3+1.5*iqr
+    wine_data = wine_data[wine_data[outlier]>a]
+    wine_data = wine_data[wine_data[outlier]<b] 
+	
+	
+	
+	
+wine_data[wine_data['Wine Type'] == 'Two'].describe().T
+
+for column in list(wine_data.columns)[:-1]:
+    if wine_data[column].dtype in ['float64', 'int64']:
+        plt.figure()
+        qqplot(wine_data[column], dist=stats.norm, line='45', fit=True)
+        plt.xlabel(column)
+        plt.show() 
+
+		
+cat1 = wine_data[wine_data['Wine Type'] == 'One'].copy()
+cat2 = wine_data[wine_data['Wine Type'] == 'Two'].copy()
+cat3 = wine_data[wine_data['Wine Type'] == 'Three'].copy()
+
+def get_samples(arr):
+#     return np.random.choice(arr, size = round(len(arr)*0.20), replace=False, p=None)
+    return arr.sample(frac=0.4, replace=False)
+
+sample1 = pd.DataFrame(get_samples(cat1))
+# print(sample1)
+sample2 = pd.DataFrame(get_samples(cat2))
+# print(sample2)
+sample3 = pd.DataFrame(get_samples(cat3))
+# print(sample3)
+merged_sample = [sample1, sample2, sample3]
+
+merged_sample_df = pd.concat(merged_sample)
+merged_sample_df 
+
+
+
+for column in list(wine_data.columns)[:-2]:
+    plt.figure()
+    plt.scatter(wine_data['Wine Type'], wine_data[column], edgecolors='black')
+    plt.xlabel('Wine Type')
+    plt.ylabel(column) 
+
+	
+	
+	
+	
+
+wine_data['encode_wt'][wine_data['Wine Type'] == 'One'] = 2
+wine_data['encode_wt'][wine_data['Wine Type'] == 'Two'] = 1
+wine_data['encode_wt'][wine_data['Wine Type'] == 'Three'] = 0
+
+wine_data['encode_wt'].dtype 
+
+
+from sklearn.linear_model import LinearRegression
+model = LinearRegression()
+X = wine_data[['OD280/OD315 of diluted wines',"Flavanoids", 'Proline', 'Total phenols']] #independent variables
+y = wine_data["encode_wt"] #depedent variables
+model.fit(X,y)
+print("Intercept:", model.intercept_,"\nCoefficients:",model.coef_) 
+
+model.score(X, y) 
+
+
+
+
+
+
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import re
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn import metrics
+import warnings
+warnings.filterwarnings(action='ignore')
+import matplotlib.cm as cm
+%matplotlib inline
+ 
+ 
+ #kurtosis
+from scipy.stats import kurtosis
+for i in df.columns:
+    if i == 'gender' or i == 'class':
+        continue
+    else:
+        x=df[i].values
+        print(i+':'+str(kurtosis(x,fisher=False,bias=True)))
+        print() 
+
+		
+from scipy import stats
+for i in df.columns:
+    if i == 'gender' or i == 'class':
+        continue
+    else:
+        print(i)
+        stats.probplot(df[i],dist='norm',plot=plt)
+        plt.show() 
+
+		
+for i in df.columns:
+    if i =='gender' or i == 'class':
+        continue
+    else:
+        df[i].plot.box(figsize=(16,10))
+        plt.show() 
+col_name=['age','workclass','fnlwgt','education',
+          'education-num','marital-status','occupation',
+          'relationship','race','sex','capital-gain',
+          'capital-loss','hours-per-week','native-country','salary']
+df=pd.read_csv('adult.csv',names=col_name)
+df.head() 
+
+
+
+
+df.replace(to_replace=' ?',value=np.nan,inplace=True) 
+
+
+
+df['native-country'].fillna(df['native-country'].mode().values[0],inplace=True) 
+
+
+
+df.groupby(['education']).agg({'occupation' : lambda x:x.mode()}).reset_index() 
+
+
+
+
+sns.catplot('salary','hours-per-week',data=df) 
+
+
+df['native-country'] = df['native-country'].astype('category').cat.codes
+df['salary'] = df['salary'].astype('category').cat.codes
+df['occupation'] = df['occupation'].astype('category').cat.codes
+df['education'] = df['education'].astype('category').cat.codes
+df['workclass'] = df['workclass'].astype('category').cat.codes
+df['relationship'] = df['relationship'].astype('category').cat.codes
+df['marital-status'] = df['marital-status'].astype('category').cat.codes
+df[df.iloc[:,13]==39] 
+
+
+def outlier_detector(datacolumn,percentile):
+    sorted(datacolumn)
+    Q1,Q3=np.perecentile(datacolumn,[100-percentile,percentile])
+    IQR=Q3-Q1
+    lower_range=Q1-(1.5*IQR)
+    upper_range=Q3-(1.5*IQR)
+    return lower_range,upper_range 
+	
+	
+from sklearn import preprocessing
+le=preprocessing.LabelEncoder() 
+
+
+df["gender"]=le.fit_transform(df["gender"]) 
+
+
+for i in sample1.columns:
+    if i == 'gender' or i=='class':
+        continue
+    else:
+        sns.distplot(sample1[i],kde=True)
+        plt.show() 
+
+		
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import re
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn import metrics
+import warnings
+warnings.filterwarnings(action='ignore')
+import matplotlib.cm as cm
+%matplotlib inline
+
+
+for i in cols:
+    if df[i].dtype != np.int64:
+        str_df[i] = df[i]
+
+
+for i in int_df.columns:
+    int_df[i].replace(' ?',int_df[i].median(),inplace=True)
+	
+for i in str_df.columns:
+    print(str_df.mode()[i][0])
+    str_df[i].replace(to_replace='?',value = str_df.mode()[i][0],inplace=True)
+
+
+z_score = np.abs(stats.zscore(int_df))
+z_score
+
+
+int_df = int_df[(z_score<2).all(axis=1)]
+
+
+merged_df = int_df.merge(str_df,how='left', on = 'index')
+
+
+LINEAR REGRESSION
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 10)
+
+
+from sklearn import preprocessing
+
+categorical = ['workclass', 'education', 'marital.status', 'occupation', 'relationship', 
+               'race', 'sex', 'native.country']
+for feature in categorical:
+        le = preprocessing.LabelEncoder()
+        X_train[feature] = le.fit_transform(X_train[feature])
+        X_test[feature] = le.fit_transform(X_test[feature])
+		
+		
+#Remove outlier		
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+
+X_train = pd.DataFrame(scaler.fit_transform(X_train), columns = X.columns)
+X_test = pd.DataFrame(scaler.transform(X_test), columns = X.columns)
+
+
+
+
+
+# Validating our model
+
+import statsmodels.api as sm
+X = sm.add_constant(comp_df[["Units"]])
+y = comp_df["Minutes"]
+model = sm.OLS(y,X).fit()
+
+
+
+
+comp_model.score(X = np.array(comp_df['Units']).reshape(-1,1), y = comp_df['Minutes']) 
+
+
+
+
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import re
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn import metrics
+import warnings
+warnings.filterwarnings(action='ignore')
+import matplotlib.cm as cm
+%matplotlib inline
+
+
+for i in cols:
+    if df[i].dtype != np.int64:
+        str_df[i] = df[i]
+
+
+for i in int_df.columns:
+    int_df[i].replace(' ?',int_df[i].median(),inplace=True)
+	
+for i in str_df.columns:
+    print(str_df.mode()[i][0])
+    str_df[i].replace(to_replace='?',value = str_df.mode()[i][0],inplace=True)
+
+
+z_score = np.abs(stats.zscore(int_df))
+z_score
+
+
+int_df = int_df[(z_score<2).all(axis=1)]
+
+
+merged_df = int_df.merge(str_df,how='left', on = 'index')
+
+
+LINEAR REGRESSION
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 10)
+
+
+from sklearn import preprocessing
+
+categorical = ['workclass', 'education', 'marital.status', 'occupation', 'relationship', 
+               'race', 'sex', 'native.country']
+for feature in categorical:
+        le = preprocessing.LabelEncoder()
+        X_train[feature] = le.fit_transform(X_train[feature])
+        X_test[feature] = le.fit_transform(X_test[feature])
+		
+		
+		
+from sklearn.preprocessing import StandardScaler
+
+scaler = StandardScaler()
+
+X_train = pd.DataFrame(scaler.fit_transform(X_train), columns = X.columns)
+X_test = pd.DataFrame(scaler.transform(X_test), columns = X.columns)
+
+
+
+
+
+# Validating our model
+
+import statsmodels.api as sm
+X = sm.add_constant(comp_df[["Units"]])
+y = comp_df["Minutes"]
+model = sm.OLS(y,X).fit()
+
+
+
+
+comp_model.score(X = np.array(comp_df['Units']).reshape(-1,1), y = comp_df['Minutes'])
+
+
+
+
+#importing all the libraries
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import random
+import matplotlib.cm as cm
+import scipy.stats as stats
+from sklearn.preprocessing import MinMaxScaler
+from scipy.special import comb
+%matplotlib inline 
+
+
+iris_setosa = iris.groupby('iris')
+
+# creating separate dataframes for each species of iris
+setosa, versicolor, virginica = [x for _,x in iris.groupby(iris['iris'])] 
+
+
+
+sns.pairplot(df) 
+sns.pairplot(iris, hue='iris') 
+
+
+sample1 = iris.sample()
+sample2 = iris.sample()
+sample3 = iris.sample() 
+
+
+r=-0.159
+t=r*np.sqrt(148)/np.sqrt(1-r**2) 
+
+
+ax = sns.heatmap(iris.corr(), annot=True) 
+
+stats.probplot(iris['sepal length'],dist='norm',plot=plt)
+plt.show() 
+
+#replace outlier
+df["Age"] = np.where(df["Age"] >75, median,df['Age']) 
+
+
+
+
+
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from scipy.stats import shapiro 
+
+
+sns.heatmap(df.corr(),annot=True) 
+
+
+df['bare_nuclei']=df['bare_nuclei'].fillna(df['bare_nuclei'].median()) 
+
+df.boxplot(rot=90,figsize=(15,5)) 
+
+
+for colm in df:
+    if df[colm].dtype in ['int64','float64']:
+        plt.figure()
+        df.boxplot(column=[colm]) 
+		
+		
+df.groupby('class')['class'].count() 
+
+
+df_cancer['uniformity_of_cell_size'].value_counts().plot(kind='bar') 
+
+df.drop_duplicates(subset='col',keep=False,inplace=true)
