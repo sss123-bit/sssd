@@ -1,0 +1,13 @@
+Rand forest:-
+For a new data point we make the random forest assingns it to a decision tree to the category it belongs and assigns the data point to the categotry that has majority vote.
+ 
+Accuracy Paradox;-
+here we say that we can't judge a model by accuracy sometimes bcoz for example take confusion matrix if we  say our model to not predict anything or completely abandon ur models and say that event is not going to occur hence the cm will change the accuraacy inc so this is acc paradox
+
+kmeans  random initialization trap solution kmeans++ :-
+wcss=[](within cluster sum of square)
+for i in range(1,11):	
+model=KMeans(n_clusters=i,init='k-means++',max_iter=300,n_init=10,random_state=0) 
+model.fit(X) 
+wcss.append(model.inertia_) 
+plt.plot(range(1,11),wcss) 
