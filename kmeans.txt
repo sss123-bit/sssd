@@ -29,3 +29,8 @@ plt.xlabel('Annual Income (k$)')
 plt.ylabel('Spending Score (1-100)')
 plt.legend()
 plt.show()
+
+sex=pd.get_dummies(df_mod1['Sex'])
+pclass=pd.get_dummies(df_mod1['Pclass'])
+emb=pd.get_dummies(df_mod1['Embarked'])
+df_mod1=pd.concat([df_mod1,sex,pclass,emb],axis=1)
