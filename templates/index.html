@@ -1,0 +1,16 @@
+< html> 
+<head>
+<title>Hello from Flask</title> 
+</head> 
+<body> 
+<div class="container">
+    <ul class="collection with-header">
+        <li class="collection-header"><h4><b>{{ list_header }}</b></h4></li>
+{#    loop through galaxies and render them in list#}
+        {% for elem in elements %}
+            <li class="collection-item"><p>{{elem}}</p></li>
+        {% endfor %}
+    </ul>
+</div>
+</body> 
+</html>
